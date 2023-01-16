@@ -3,6 +3,7 @@ import createSagaMiddleware from "@redux-saga/core";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./Reducer/root.reducer";
 import { rootSaga } from "./sagas/rootSagas";
+import logger from "redux-logger";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
@@ -10,7 +11,9 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(sagaMiddleware),
+    })
+      .concat(sagaMiddleware)
+      .concat(logger),
 });
 
 sagaMiddleware.run(rootSaga);
